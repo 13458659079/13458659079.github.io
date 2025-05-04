@@ -189,19 +189,19 @@
                 });
             });
 
-            // 加载 aa.html 的内容
-            const iframe = document.createElement('iframe');
-            iframe.src = 'aa.html';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = 'none';
+            // 修改内嵌弹窗内容
+            const modalContent = `
+                <div style="width: 100%; height: 100%; overflow: auto;">
+                    <h1 style="text-align: center;">球球给个三连吧</h1>
+                    <iframe src="aa.html" style="width: 100%; height: 90%; border: none;"></iframe>
+                </div>
+            `;
 
             // 将内容添加到弹窗
+            modal.innerHTML = modalContent;
             modal.appendChild(closeButton);
-            modal.appendChild(iframe);
             document.body.appendChild(modal);
         }
     </script>
 </body>
 </html>
-``` 
