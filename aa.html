@@ -236,7 +236,43 @@ body {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20em 20em 0 0;
-}</style>
+}
+
+/* 弹窗样式 */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 30em;
+  max-width: 90%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.popup-content {
+  padding: 2em;
+  text-align: center;
+}
+
+.popup.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.popup h2 {
+  margin-bottom: 1.5em;
+  font-size: 1.5em;
+}
+
+.popup .button {
+  margin: 0.5em;
+}
+</style>
 </head>
 <body>
 <!DOCTYPE html>
@@ -266,6 +302,15 @@ body {
       <button class="button button-unhappy">下次一定</button>
     </div>
   </section>
+
+  <!-- 添加弹窗的 HTML -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>你是从哪里看到的ヾ(•ω•`)o</h2>
+      <button class="button button-happy" id="btnBilibili">B站（目前被封禁了已老实）</button>
+      <button class="button button-unhappy" id="btnDouyin">抖音</button>
+    </div>
+  </div>
 </body>
 
 </html><script>
@@ -398,7 +443,7 @@ container.addEventListener('mouseleave', () => {
 })
 
 btnHappy.addEventListener('click', () => {
-    window.location.href = 'https://www.douyin.com/user/self?from_tab_name=main';
+    popup.classList.add('show'); // 显示弹窗
 });
 
 btnUnhappy.addEventListener('click', () => {
@@ -425,6 +470,28 @@ btnUnhappy.addEventListener('click', () => {
         startAnimation()
     }
 })
+
+// 获取弹窗和按钮
+const popup = document.getElementById('popup');
+const btnBilibili = document.getElementById('btnBilibili');
+const btnDouyin = document.getElementById('btnDouyin');
+
+// B站按钮点击事件
+btnBilibili.addEventListener('click', () => {
+    window.location.href = 'https://space.bilibili.com/3546366343121193?spm_id_from=333.1007.0.0';
+});
+
+// 抖音按钮点击事件
+btnDouyin.addEventListener('click', () => {
+    window.location.href = 'https://www.douyin.com/user/self?from_tab_name=main';
+});
+
+// 点击弹窗外部关闭弹窗
+window.addEventListener('click', (event) => {
+    if (event.target === popup) {
+        popup.classList.remove('show');
+    }
+});
 
 startAnimation()
 </script>
