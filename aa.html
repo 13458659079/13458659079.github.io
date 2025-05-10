@@ -444,32 +444,34 @@ container.addEventListener('mouseleave', () => {
 
 btnHappy.addEventListener('click', () => {
     popup.classList.add('show'); // 显示弹窗
+    startAnimation(); // 确保动画重新启动
 });
 
-btnUnhappy.addEventListener('click', () => {
-    alert('下次一定！');
-});
+let clickCount = 0; // 初始化点击计数器
 
 btnUnhappy.addEventListener('click', () => {
+    clickCount++; // 每次点击计数器加1
+    document.title = `点了${clickCount}次下次一定！`; // 修改浏览器顶部标题
+
     if (state.animationId) {
-        state.rejectCount++
+        state.rejectCount++;
 
         if (state.rejectCount >= config.maxUnhappyCount) {
-            stopAnimation()
-            transitionToState('unhappy', btnHappy)
+            stopAnimation();
+            transitionToState('unhappy', btnHappy);
         } else {
-            btnUnhappy.style.position = 'absolute'
-            btnUnhappy.style.left = `${Math.random() * 80}%`
-            btnUnhappy.style.top = `${Math.random() * 80}%`
-            state.target.happiness = Math.max(0.1, state.target.happiness - 0.1)
-            btnHappy.style.transform = `scale(${1 + state.rejectCount * 0.1})`
+            btnUnhappy.style.position = 'absolute';
+            btnUnhappy.style.left = `${Math.random() * 80}%`;
+            btnUnhappy.style.top = `${Math.random() * 80}%`;
+            state.target.happiness = Math.max(0.1, state.target.happiness - 0.1);
+            btnHappy.style.transform = `scale(${1 + state.rejectCount * 0.1})`;
         }
     } else {
-        state.rejectCount = 0
-        transitionToState('normal')
-        startAnimation()
+        state.rejectCount = 0;
+        transitionToState('normal');
+        startAnimation(); // 确保动画重新启动
     }
-})
+});
 
 // 获取弹窗和按钮
 const popup = document.getElementById('popup');
